@@ -1,32 +1,34 @@
+**English** | [Français](README.fr.md)
+
 # Tempest Colony Guard
 
-Addon de compatibilité NeoForge pour [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies), pour Minecraft 1.21.1 / NeoForge 21.1.x.
+NeoForge compatibility addon for [MineColonies](https://www.curseforge.com/minecraft/mc-mods/minecolonies), for Minecraft 1.21.1 / NeoForge 21.1.x.
 
-## Le problème
+## The problem
 
-MineColonies ne bloque le spawn naturel de mobs hostiles à l'intérieur des bâtiments de colonie que pour les entités qui implémentent l'interface vanilla `net.minecraft.world.entity.monster.Enemy`. Beaucoup de mobs hostiles ajoutés par d'autres mods (ex : le Direwolf de [Tensura](https://www.curseforge.com/minecraft/mc-mods/tensura)) étendent `Mob`/`PathfinderMob` directement sans implémenter cette interface, et échappent donc totalement à la protection anti-spawn des colonies.
+MineColonies only blocks natural spawns of hostile mobs inside colony buildings for entities that implement the vanilla `net.minecraft.world.entity.monster.Enemy` interface. Many hostile mobs added by other mods (e.g. [Tensura](https://www.curseforge.com/minecraft/mc-mods/tensura)'s Direwolf) extend `Mob`/`PathfinderMob` directly without implementing that interface, so they completely bypass colony spawn protection.
 
-## Ce que fait ce mod
+## What this mod does
 
-- **Protection des bâtiments** : reproduit exactement la logique native de MineColonies (bloque le spawn naturel à l'intérieur de l'empreinte des bâtiments, niveau configurable) pour tout mob hostile non-vanilla détecté.
-- **Obligation d'obscurité** : force ces mêmes mobs à respecter la règle vanilla de luminosité pour spawner (comme un zombie), mais uniquement dans le territoire revendiqué par une colonie — les torches redeviennent efficaces.
-- **Détection** : `MobCategory.MONSTER` par défaut, plus des tags de secours (`#tempestcolonyguard:protect_include` / `#tempestcolonyguard:protect_exclude`) pour ajuster manuellement les cas particuliers.
-- **N'affecte pas les raids** (MineColonies ou addons comme le raid Direwolf de Tensura/TrNightmare) : ces mécaniques placent leurs mobs directement dans le monde sans passer par les événements de spawn naturel que ce mod écoute.
-- **Entièrement configurable** : chaque mécanisme peut être désactivé indépendamment via le fichier de config serveur généré au premier lancement (`serverconfig/tempestcolonyguard-server.toml`).
+- **Building protection**: reproduces MineColonies' native logic exactly (blocks natural spawns inside a building's footprint, configurable level) for any detected non-vanilla hostile mob.
+- **Darkness requirement**: forces these same mobs to respect the vanilla light-level spawn rule (like a zombie), but only within a colony's claimed territory — torches become effective against them again.
+- **Detection**: `MobCategory.MONSTER` by default, plus fallback tags (`#tempestcolonyguard:protect_include` / `#tempestcolonyguard:protect_exclude`) to manually adjust edge cases.
+- **Does not affect raids** (MineColonies' own, or addons like Tensura/TrNightmare's Direwolf raid): those mechanics place mobs directly into the world without going through the natural spawn events this mod listens to.
+- **Fully configurable**: each mechanism can be toggled independently via the server config file generated on first launch (`serverconfig/tempestcolonyguard-server.toml`).
 
-## Compiler
+## Building
 
-Ce projet utilise [ModDevGradle](https://github.com/neoforged/ModDevGradle). MineColonies et Structurize sont nécessaires **uniquement à la compilation** (dépendances `compileOnly`) et ne sont pas inclus dans ce dépôt (fichiers sous copyright de leurs auteurs).
+This project uses [ModDevGradle](https://github.com/neoforged/ModDevGradle). MineColonies and Structurize are needed **only at compile time** (`compileOnly` dependencies) and are not included in this repository (third-party files under their authors' copyright).
 
-1. Télécharge les jars suivants (versions utilisées lors du développement, adapter si besoin) et place-les dans `libs/` :
+1. Download the following jars (versions used during development, adjust as needed) and place them in `libs/`:
    - `minecolonies-1.1.1368-1.21.1.jar` — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/minecolonies) / [Modrinth](https://modrinth.com/mod/minecolonies)
    - `structurize-1.0.832-1.21.1.jar` — [CurseForge](https://www.curseforge.com/minecraft/mc-mods/structurize) / [Modrinth](https://modrinth.com/mod/structurize)
-2. Le projet nécessite un JDK 21 pour lancer Gradle (le JDK système peut être plus récent et provoquer une erreur `Unsupported class file major version`). Exemple avec le runtime Java 21 fourni par PrismLauncher :
+2. The project requires a JDK 21 to run Gradle (a newer system JDK can trigger an `Unsupported class file major version` error). Example using PrismLauncher's bundled Java 21 runtime:
    ```
-   JAVA_HOME=/chemin/vers/java-runtime-delta ./gradlew jar
+   JAVA_HOME=/path/to/java-runtime-delta ./gradlew jar
    ```
-3. Le jar compilé se trouve dans `build/libs/`.
+3. The built jar is output to `build/libs/`.
 
-## Licence
+## License
 
-MIT — voir [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).
