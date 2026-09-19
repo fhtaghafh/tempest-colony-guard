@@ -1,0 +1,31 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+runs
+run-data
+
+repo
+
+# jars tiers (MineColonies / Structurize) necessaires uniquement a la compilation locale.
+# Sous copyright de leurs auteurs respectifs : ne pas redistribuer dans ce depot.
+# Voir README.md pour savoir ou les recuperer.
+libs/*.jar
